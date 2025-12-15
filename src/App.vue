@@ -299,7 +299,7 @@ const summaryChips = computed(() => {
             <h3>Линейная кухня</h3>
             <p class="muted">Минимум швов, чистый фасад, всё по одной стене.</p>
             <div class="card-top layout-photo">
-              <div class="card-visual" :style="{ backgroundImage: `url(${layoutImages.straight})` }" />
+              <div class="card-visual" :style="{ backgroundImage: `url('${layoutImages.straight}')` }" />
             </div>
           </div>
           <div class="card focus" :class="{ selected: isSelected('layoutType', 'corner') }" @click="select('layoutType', 'corner')">
@@ -307,7 +307,7 @@ const summaryChips = computed(() => {
             <h3>Г-образная кухня</h3>
             <p class="muted">Рабочий треугольник и больше места для хранения.</p>
             <div class="card-top layout-photo">
-              <div class="card-visual" :style="{ backgroundImage: `url(${layoutImages.corner})` }" />
+              <div class="card-visual" :style="{ backgroundImage: `url('${layoutImages.corner}')` }" />
             </div>
           </div>
         </div>
@@ -336,7 +336,7 @@ const summaryChips = computed(() => {
             @click="select('milling', item.title)"
           >
             <div class="card-top" :style="{ background: item.accent }">
-              <div class="card-visual" :style="{ backgroundImage: `url(${item.image})` }" />
+              <div class="card-visual" :style="{ backgroundImage: `url('${item.image}')` }" />
               <div class="pattern" :style="{ backgroundImage: item.pattern }" />
             </div>
             <div class="card-body">
@@ -356,7 +356,7 @@ const summaryChips = computed(() => {
             @click="select('countertop', `${item.title} — ${item.variant}`)"
           >
             <div class="card-top" :style="{ background: item.accent }">
-              <div class="card-visual" :style="{ backgroundImage: `url(${item.image})` }" />
+              <div class="card-visual" :style="{ backgroundImage: `url('${item.image}')` }" />
               <div class="texture" :style="{ backgroundImage: item.texture }" />
             </div>
             <div class="card-body">
