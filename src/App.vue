@@ -1,7 +1,20 @@
 <script setup lang="ts">
 import { computed, reactive, ref } from 'vue'
+import * as XLSX from 'xlsx'
 
 type StepKey = 'layout' | 'milling' | 'countertop' | 'colors' | 'handles'
+type Submission = {
+  timestamp: string
+  layoutType: string
+  roomHeight: string
+  roomLength: string
+  roomWidth: string
+  milling: string
+  countertop: string
+  color: string
+  handle: string
+  lighting: string
+}
 
 const stepOrder: StepKey[] = ['layout', 'milling', 'countertop', 'colors', 'handles']
 
@@ -39,6 +52,8 @@ const state = reactive({
   handle: '',
   lighting: null as null | boolean,
 })
+
+const STORAGE_KEY = 'frau-submissions'
 
 const millingOptions = [
   {
@@ -150,6 +165,54 @@ const select = (field: keyof typeof state, value: string | boolean) => {
 
 const isSelected = (field: keyof typeof state, value: string | boolean) =>
   (state as any)[field] === value
+
+const canExport = computed(() => {
+  const hasLayout = state.layoutType !== ''
+  const hasGeometry = state.roomHeight && state.roomLength && (state.layoutType === 'corner' ? state.roomWidth : true)
+  const hasChoices = state.milling && state.countertop && state.color && state.handle
+  const hasLighting = state.lighting !== null
+  return Boolean(hasLayout && hasGeometry && hasChoices && hasLighting)
+})
+
+const buildSubmission = (): Submission => ({
+  timestamp: new Date().toISOString(),
+  layoutType: state.layoutType || '-\n',
+  roomHeight: state.roomHeight || '-',
+  roomLength: state.roomLength || '-',
+  roomWidth: state.layoutType === 'corner' ? state.roomWidth || '-' : '-',
+  milling: state.milling || '-',
+  countertop: state.countertop || '-',
+  color: state.color || '-',
+  handle: state.handle || '-',
+  lighting: state.lighting === null ? '-' : state.lighting ? 'Да' : 'Нет',
+})
+
+const loadSubmissions = (): Submission[] => {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY)
+    if (!raw) return []
+    return JSON.parse(raw) as Submission[]
+  } catch (e) {
+    console.warn('Не удалось прочитать локальные заявки', e)
+    return []
+  }
+}
+
+const persistSubmissions = (items: Submission[]) => {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(items))
+}
+
+const exportToExcel = () => {
+  const submission = buildSubmission()
+  const items = loadSubmissions()
+  items.push(submission)
+  persistSubmissions(items)
+
+  const worksheet = XLSX.utils.json_to_sheet(items)
+  const workbook = XLSX.utils.book_new()
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'Заявки')
+  XLSX.writeFile(workbook, 'frau-configurations.xlsx')
+}
 
 const summaryChips = computed(() => {
   const chips = [] as string[]
@@ -348,7 +411,22 @@ const summaryChips = computed(() => {
               {{ idx + 1 }}
             </button>
           </div>
-          <button class="primary" :disabled="isLast" @click="nextStep">Далее</button>
+          <button
+            v-if="!isLast"
+            class="primary"
+            :disabled="isLast"
+            @click="nextStep"
+          >
+            Далее
+          </button>
+          <button
+            v-else
+            class="primary"
+            :disabled="!canExport"
+            @click="exportToExcel"
+          >
+            Сохранить в Excel
+          </button>
         </footer>
       </section>
     </main>
