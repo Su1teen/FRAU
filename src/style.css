@@ -261,6 +261,10 @@ body {
   margin-bottom: 12px;
 }
 
+.card.milling .card-top {
+  height: 180px;
+}
+
 .pattern,
 .texture {
   position: absolute;
@@ -284,7 +288,7 @@ body {
 }
 
 .layout-photo {
-  height: 140px;
+  height: 240px;
   margin-top: 12px;
 }
 
