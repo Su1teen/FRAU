@@ -62,6 +62,7 @@ const millingOptions = [
     note: 'Мягкие канты, акцент на объём',
     accent: '#8ec5fc',
     pattern: 'linear-gradient(135deg, rgba(255,255,255,.24), transparent)',
+    image: '/Картинки/Фрезеровка - Выборка.jpg',
   },
   {
     id: 'quadro',
@@ -69,6 +70,7 @@ const millingOptions = [
     note: 'Геометрия с тонкой рамкой',
     accent: '#ffb6c1',
     pattern: 'repeating-linear-gradient(90deg, rgba(255,255,255,.35) 0 8px, transparent 8px 16px)',
+    image: '/Картинки/Фрезеровка - Квадро.jpg',
   },
   {
     id: 'line',
@@ -76,6 +78,7 @@ const millingOptions = [
     note: 'Чистые полосы, минимум декора',
     accent: '#b1f5d2',
     pattern: 'repeating-linear-gradient(0deg, rgba(255,255,255,.35) 0 6px, transparent 6px 12px)',
+    image: '/Картинки/Фрезеровка - Линейная.jpg',
   },
   {
     id: 'panel',
@@ -83,6 +86,7 @@ const millingOptions = [
     note: 'Глубокая выборка под классику',
     accent: '#d9c2ff',
     pattern: 'radial-gradient(circle at 30% 30%, rgba(255,255,255,.45), transparent 40%)',
+    image: '/Картинки/Фрезеровка - Панель.jpg',
   },
 ]
 
@@ -93,6 +97,7 @@ const countertopOptions = [
     variant: 'Песочница',
     accent: '#f1d3a8',
     texture: 'radial-gradient(circle, rgba(0,0,0,.08) 1px, transparent 1px)',
+    image: '/Картинки/Столешница - песочница.jpg',
   },
   {
     id: 'stone-marble',
@@ -100,6 +105,7 @@ const countertopOptions = [
     variant: 'Под мрамор',
     accent: '#f5f5f5',
     texture: 'linear-gradient(135deg, rgba(0,0,0,.08) 0 2px, transparent 2px 8px)',
+    image: '/Картинки/Столешница - под мрамор(лдсп).jpg',
   },
   {
     id: 'ldsp-wood',
@@ -107,6 +113,7 @@ const countertopOptions = [
     variant: 'Под дерево',
     accent: '#d7b48a',
     texture: 'repeating-linear-gradient(90deg, rgba(0,0,0,.08) 0 3px, transparent 3px 12px)',
+    image: '/Картинки/Столешница - под дерево.jpeg',
   },
   {
     id: 'ldsp-marble',
@@ -114,6 +121,7 @@ const countertopOptions = [
     variant: 'Под мрамор',
     accent: '#e8e8ef',
     texture: 'radial-gradient(circle at 70% 30%, rgba(0,0,0,.05), transparent 45%)',
+    image: '/Картинки/Столешница - мрамор.jpg',
   },
   {
     id: 'ldsp-sand',
@@ -121,6 +129,7 @@ const countertopOptions = [
     variant: 'Песочница',
     accent: '#e4c9a6',
     texture: 'radial-gradient(circle, rgba(0,0,0,.05) 1px, transparent 3px)',
+    image: '/Картинки/Столешница - песочница(лдсп).jpg',
   },
 ]
 
@@ -284,13 +293,18 @@ const summaryChips = computed(() => {
             <div class="pill">Прямая</div>
             <h3>Линейная кухня</h3>
             <p class="muted">Минимум швов, чистый фасад, всё по одной стене.</p>
-            <div class="layout-visual linear" />
+            <div class="layout-visual linear">
+              <div class="layout-bar long" />
+            </div>
           </div>
           <div class="card focus" :class="{ selected: isSelected('layoutType', 'corner') }" @click="select('layoutType', 'corner')">
             <div class="pill">Угловая</div>
             <h3>Г-образная кухня</h3>
             <p class="muted">Рабочий треугольник и больше места для хранения.</p>
-            <div class="layout-visual corner" />
+            <div class="layout-visual corner">
+              <div class="layout-bar short" />
+              <div class="layout-bar tall" />
+            </div>
           </div>
         </div>
 
@@ -318,6 +332,7 @@ const summaryChips = computed(() => {
             @click="select('milling', item.title)"
           >
             <div class="card-top" :style="{ background: item.accent }">
+              <div class="card-visual" :style="{ backgroundImage: `url(${item.image})` }" />
               <div class="pattern" :style="{ backgroundImage: item.pattern }" />
             </div>
             <div class="card-body">
@@ -337,6 +352,7 @@ const summaryChips = computed(() => {
             @click="select('countertop', `${item.title} — ${item.variant}`)"
           >
             <div class="card-top" :style="{ background: item.accent }">
+              <div class="card-visual" :style="{ backgroundImage: `url(${item.image})` }" />
               <div class="texture" :style="{ backgroundImage: item.texture }" />
             </div>
             <div class="card-body">

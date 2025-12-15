@@ -98,14 +98,10 @@ body {
 
 .lede {
   color: var(--text-muted);
-  margin: 0 0 12px;
-  max-width: 640px;
-}
-
-.eyebrow {
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  font-size: 12px;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 100vh;
+  color: #e7e9ec;
   color: #c7cad1;
   margin: 0;
 }
@@ -274,6 +270,13 @@ body {
   opacity: 0.8;
 }
 
+.card-visual {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: saturate(1.05);
+}
 .card-body {
   display: flex;
   flex-direction: column;
@@ -281,40 +284,40 @@ body {
 }
 
 .layout-visual {
-  margin-top: 12px;
+  margin-top: 14px;
   height: 120px;
-  border-radius: 12px;
-  border: 1px dashed rgba(255, 255, 255, 0.2);
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0)),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
   position: relative;
+  overflow: hidden;
 }
 
-.layout-visual::after,
-.layout-visual::before {
-  content: '';
+.layout-bar {
   position: absolute;
-  border-radius: 8px;
   background: linear-gradient(135deg, #161820, #202432);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 10px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
 }
 
-.layout-visual.linear::after {
-  inset: 26px 16px 26px 16px;
+.layout-visual.linear .layout-bar.long {
+  inset: 28px 18px 28px 18px;
 }
 
-.layout-visual.corner::after {
-  top: 20px;
-  left: 18px;
-  right: 60px;
-  bottom: 20px;
+.layout-visual.corner .layout-bar.short {
+  top: 26px;
+  left: 20px;
+  right: 90px;
+  height: 68px;
 }
 
-.layout-visual.corner::before {
-  top: 20px;
-  right: 18px;
-  bottom: 60px;
-  width: 54px;
+.layout-visual.corner .layout-bar.tall {
+  top: 26px;
+  right: 22px;
+  width: 72px;
+  bottom: 40px;
 }
 
 .form-grid {
