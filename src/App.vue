@@ -255,7 +255,7 @@ const summaryChips = computed(() => {
     <main class="shell">
       <header class="hero">
         <div>
-          <p class="eyebrow">FRAU / интерьерное бюро</p>
+          <img src="/media/frau logo.png" alt="FRAU" class="logo" />
           <h1>Конфигуратор кухни с умной навигацией</h1>
           <p class="lede">
             Пять шагов без перегруза: выбирайте геометрию, фрезеровку, столешницу, цвет и фурнитуру.
